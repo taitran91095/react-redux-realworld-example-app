@@ -7,7 +7,8 @@ import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import App from './components/App';
-
+//using redux(Provider); react-route(Switch-Route); define Store as expected from redux
+//set Provider to 'root' element
 ReactDOM.render((
   <Provider store={store}>
     <ConnectedRouter history={history}>

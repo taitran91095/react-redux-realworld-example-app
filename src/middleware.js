@@ -7,6 +7,7 @@ import {
   REGISTER
 } from './constants/actionTypes';
 
+//define promise middleware
 const promiseMiddleware = store => next => action => {
   if (isPromise(action.payload)) {
     store.dispatch({ type: ASYNC_START, subtype: action.type });
@@ -60,9 +61,12 @@ const localStorageMiddleware = store => next => action => {
   next(action);
 };
 
+//the return mean if a == true then return b, else return a
+//using this here to check if v is null or not
 function isPromise(v) {
   return v && typeof v.then === 'function';
 }
 
 
 export { promiseMiddleware, localStorageMiddleware }
+ 

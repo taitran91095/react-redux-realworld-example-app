@@ -1,0 +1,7 @@
+Read order:
+
+index.js -> agent.js -> middleware.js
+
+
+Legend:
+//// : Need research more

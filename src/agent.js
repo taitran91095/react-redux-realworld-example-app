@@ -1,13 +1,20 @@
+//This file define superagent - the framework for making http request easier and more function
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
+//define API domain
 const API_ROOT = 'https://conduit.productionready.io/api';
 
+//set encode const in short of encodeURIComponent()
+//support URI Encode: https://www.w3schools.com/jsref/jsref_encodeURIComponent.asp
 const encode = encodeURIComponent;
+
+//define responseBody function for esier get response body
 const responseBody = res => res.body;
 
+//define token and setToken to request header function
 let token = null;
 const tokenPlugin = req => {
   if (token) {
@@ -15,6 +22,9 @@ const tokenPlugin = req => {
   }
 }
 
+// set parameter for request, request will start with defined domain above
+// set token to header if token != null
+// after receive the response, don't care about status just get the body
 const requests = {
   del: url =>
     superagent.del(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
@@ -26,6 +36,9 @@ const requests = {
     superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
 };
 
+
+// define Auth function with parameter, using request define above
+// Ex: https://conduit.productionready.io/api/user to get current user by Token
 const Auth = {
   current: () =>
     requests.get('/user'),
@@ -37,12 +50,22 @@ const Auth = {
     requests.put('/user', { user })
 };
 
+// get all tags
 const Tags = {
   getAll: () => requests.get('/tags')
 };
 
+//define limit function that will generate the string user for URL parameter
+//Ex : imit=10&offset=10
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
+//slug is “a part of a URL which identifies a particular page on a website in a form readable by users."
+//omit mean forget 
+//Object.assign  is used to copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object.
+//below code mean return an object that is combined by article and slug = undefined
+////
 const omitSlug = article => Object.assign({}, article, { slug: undefined })
+
+//define function to process with Article API
 const Articles = {
   all: page =>
     requests.get(`/articles?${limit(10, page)}`),
@@ -68,6 +91,7 @@ const Articles = {
     requests.post('/articles', { article })
 };
 
+//define function to process with Comment API
 const Comments = {
   create: (slug, comment) =>
     requests.post(`/articles/${slug}/comments`, { comment }),
@@ -77,6 +101,7 @@ const Comments = {
     requests.get(`/articles/${slug}/comments`)
 };
 
+//define function to process with Comment API
 const Profile = {
   follow: username =>
     requests.post(`/profiles/${username}/follow`),
@@ -86,6 +111,8 @@ const Profile = {
     requests.del(`/profiles/${username}/follow`)
 };
 
+//define setToken function
+//define setter for Token because cannot change token value
 export default {
   Articles,
   Auth,
