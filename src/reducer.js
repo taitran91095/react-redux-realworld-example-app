@@ -8,6 +8,7 @@ import home from './reducers/home';
 import profile from './reducers/profile';
 import settings from './reducers/settings';
 import { routerReducer } from 'react-router-redux';
+import myreducer from './reducers/myreducer';
 
 export default combineReducers({
   article,
@@ -18,5 +19,6 @@ export default combineReducers({
   home,
   profile,
   settings,
+  myreducer,
   router: routerReducer
 });
