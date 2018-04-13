@@ -11,6 +11,7 @@ const API_ROOT = 'https://conduit.productionready.io/api';
 //support URI Encode: https://www.w3schools.com/jsref/jsref_encodeURIComponent.asp
 const encode = encodeURIComponent;
 
+const MY_MOCK_API = 'http://localhost:3000';
 //define responseBody function for esier get response body
 const responseBody = res => res.body;
 
@@ -36,7 +37,20 @@ const requests = {
     superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
 };
 
+const myRequest = {
+  del: url =>
+    superagent.del(`${MY_MOCK_API}${url}`).then(responseBody),
+  get: url =>
+    superagent.get(`${MY_MOCK_API}${url}`).then(responseBody),
+  put: (url, body) =>
+    superagent.put(`${MY_MOCK_API}${url}`, body).then(responseBody),
+  post: (url, body) =>
+    superagent.post(`${MY_MOCK_API}${url}`, body).then(responseBody)
+};
 
+const productCall = {
+  list:() => myRequest.get('/product')
+}
 // define Auth function with parameter, using request define above
 // Ex: https://conduit.productionready.io/api/user to get current user by Token
 const Auth = {
@@ -119,5 +133,6 @@ export default {
   Comments,
   Profile,
   Tags,
+  productCall,
   setToken: _token => { token = _token; }
 };
