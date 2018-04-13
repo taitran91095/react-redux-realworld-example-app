@@ -4,6 +4,7 @@ import agent from '../agent';
 import {connect} from 'react-redux';
 import {MY_ACTION,MY_SECTION_LOADED} from '../constants/actionTypes';
 import MyTable from './MySection/MyTable';
+import MyManagerView from './MySection/MyMangerView';
 
 const mapStateToProps = state =>{
     return {a:state.myreducer.mykey,
@@ -35,7 +36,8 @@ class MySection extends React.Component{
             <div>
                 <h1 onClick={this.myAction}>This is my page</h1>
                 <h2 attr={this.props.a}>{value}</h2>
-                <MyTable productList={this.props.listProduct}/>
+                {/* <MyTable productList={this.props.listProduct}/> */}
+                <MyManagerView productList={this.props.listProduct}/>
             </div>
         )
     }

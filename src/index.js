@@ -5,6 +5,7 @@ import { store, history} from './store';
 
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
+import "react-toggle/style.css";
 
 import App from './components/App';
 //using redux(Provider); react-route(Switch-Route); define Store as expected from redux

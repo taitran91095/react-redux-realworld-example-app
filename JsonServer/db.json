@@ -4,21 +4,22 @@
       "id": 1,
       "name": "iPhone X",
       "price": 2000000,
-      "qty":3,
-      "visible":true
-    },   {
+      "qty": 3,
+      "visible": true
+    },
+    {
       "id": 2,
       "name": "iPhone X2",
       "price": 20000002,
-      "qty":32,
-      "visible":true
+      "qty": 32,
+      "visible": true
     },
     {
       "id": 3,
-      "name": "iPhone X3",
-      "price": 2000000,
-      "qty":33,
-      "visible":true
+      "name": "iPhone 3",
+      "price": 2000000.999,
+      "qty": 33,
+      "visible": false
     }
   ]
 }
