@@ -1,4 +1,4 @@
-import {MY_ACTION,MY_SECTION_LOADED,SORT_LIST_INCREASE,SORT_LIST_DECREASE} from '../constants/actionTypes';
+import {MY_ACTION,MY_SECTION_LOADED,SORT_LIST_INCREASE,SORT_LIST_DECREASE,MY_CHANGE_VALUE} from '../constants/actionTypes';
 
 function compare(a,b) {
     if (a.name < b.name)
@@ -34,6 +34,9 @@ export default (state=initialState,action) =>{
             var temp = action.productList.sort(compareD)
             console.log(state);
             return{...state,productList: state.productList.slice(0,0).concat(temp)};
+        case MY_CHANGE_VALUE:
+            state.productList[action.index][action.attr] = action.value;
+            return{...state,productList: state.productList.slice()};
         default:
         return state;
     }

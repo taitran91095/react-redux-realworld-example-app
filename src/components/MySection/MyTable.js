@@ -1,6 +1,6 @@
 import React from 'react';
 import Toggle from 'react-toggle';
-import {SORT_LIST_INCREASE,SORT_LIST_DECREASE} from '../../constants/actionTypes';
+import {SORT_LIST_INCREASE,SORT_LIST_DECREASE,MY_CHANGE_VALUE} from '../../constants/actionTypes';
 import {connect} from 'react-redux';
 
 const mapStateToProps = state => ({
@@ -9,7 +9,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     sortDataD: (productList) => dispatch({ type: SORT_LIST_DECREASE, productList }),
-    sortData: (productList) => dispatch({ type: SORT_LIST_INCREASE, productList })
+    sortData: (productList) => dispatch({ type: SORT_LIST_INCREASE, productList }),
+    onChangeHandle: (attr,index,event) =>{
+      if(attr!= "isVisible"){
+        return dispatch({ type: MY_CHANGE_VALUE, attr:attr,index:index,value:event.target.value});
+      }else{
+        return dispatch({ type: MY_CHANGE_VALUE, attr:attr,index:index,value:event.target.checked});
+      }
+    } 
 });
 
 
@@ -18,6 +25,14 @@ class MyTable extends React.Component {
     super();
     this.sortDataD = data => this.props.sortDataD(this.props.productList);
     this.sortData = data => this.props.sortData(this.props.productList);
+    this.onChangeHandle = (attr,index,event) =>{
+      console.log(attr);
+      console.log(index);
+      console.log(event.target.value);
+      console.log(event.target.checked);
+        return this.props.onChangeHandle(attr,index,event);
+    }
+    
   }
 
   
@@ -72,13 +87,13 @@ class MyTable extends React.Component {
                 {product.name}
                 </td>
                 <td>
-                 {product.price} 
+                 <input className="form-control" onChange={this.onChangeHandle.bind(this,'price',i)} value={product.price}  />
                 </td>
                 <td>
-                  {product.qty}
+                <input className="form-control" onChange={this.onChangeHandle.bind(this,'qty',i)} value={product.qty}  />
                 </td>
                 <td>
-                  <Toggle defaultChecked={product.visible}  />
+                  <Toggle defaultChecked={product.visible} onChange={this.onChangeHandle.bind(this,'isVisible',i)} />
                 </td>
               </tr>
         )}
